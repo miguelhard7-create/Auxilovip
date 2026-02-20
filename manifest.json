@@ -1,1 +1,23 @@
+{
+  "name": "Painel Miguel V7",
+  "short_name": "MJ V7",
+  "description": "Painel de Sensibilidade e Otimização @miguel_v_.7",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#9d4edd",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/771/771210.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/771/771210.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
 
