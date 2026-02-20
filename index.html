@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel @miguel_v_.7</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #9d4edd; 
+            --bg-black: #000000;
+            --border-color: #5a189a;
+            --input-bg: #1a1a1a;
+        }
+
+        body {
+            background-color: #121212;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            overflow: hidden;
+        }
+
+        .panel {
+            width: 380px;
+            background-color: var(--bg-black);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #222;
+            box-shadow: 0 0 40px rgba(0,0,0,1);
+            z-index: 100;
+        }
+
+        /* Top Bar Sem a Seta */
+        .top-bar {
+            background-color: var(--primary-color);
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+
+        .btn-hide {
+            background: rgba(0, 0, 0, 0.4);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Tabs */
+        .tab-bar {
+            display: flex;
+            padding: 10px;
+            gap: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            opacity: 0.4;
+            flex: 1;
+        }
+
+        .tab.active { opacity: 1; font-weight: bold; }
+
+        /* Login */
+        #loginScreen { padding: 40px 30px; text-align: center; }
+        .key-input {
+            width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #333;
+            border-radius: 8px; color: white; text-align: center; margin-bottom: 15px; box-sizing: border-box;
+        }
+
+        /* Reabrir */
+        #reopenBtn {
+            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
+            background-color: #000; border: 2px solid var(--primary-color); border-radius: 50%;
+            display: none; cursor: pointer; box-shadow: 0 0 15px var(--primary-color); z-index: 999;
+            color: white; display: none; align-items: center; justify-content: center;
+        }
+
+        /* Sections */
+        .content-section { padding: 15px 20px; display: none; min-height: 300px; overflow-y: auto; max-height: 400px; }
+        .content-section.active { display: block; }
+
+        .option-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 14px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        input[type="checkbox"] {
+            appearance: none; width: 22px; height: 22px; background: #1a1a1a;
+            border: 1px solid #333; border-radius: 4px; margin-right: 12px; cursor: pointer;
+        }
+        input[type="checkbox"]:checked { background: var(--primary-color); position: relative; }
+        input[type="checkbox"]:checked::after { content: '✓'; color: white; position: absolute; left: 5px; top: -1px; font-weight: bold; }
+
+        .btn-action { width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; text-transform: uppercase; cursor: pointer; }
+        .divider { height: 1px; background: var(--border-color); margin: 15px 0; opacity: 0.5; }
+
+        /* Info Items */
+        .info-item { background: #0d0d0d; padding: 12px; border-left: 4px solid var(--primary-color); border-radius: 4px; margin-bottom: 10px; }
+        .info-label { color: var(--primary-color); font-size: 9px; text-transform: uppercase; font-weight: bold; }
+        .info-value { font-size: 14px; margin-top: 2px; display: block; font-family: 'Consolas', monospace; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<button id="reopenBtn" onclick="toggleVisibility()"><i class="fas fa-eye"></i></button>
+
+<div class="panel" id="mainPanel">
+    
+    <div id="loginScreen">
+        <div style="font-size: 40px; color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-user-secret"></i></div>
+        <div style="margin-bottom: 20px; font-weight: bold;">PAINEL @MIGUEL_V_.7</div>
+        <input type="text" id="keyInput" class="key-input" placeholder="DIGITE A KEY (FFH4X)">
+        <button class="btn-action" onclick="checkLogin()">Entrar</button>
+    </div>
+
+    <div id="mainContent" class="hidden">
+        <div class="top-bar">
+            <span>@MIGUEL_V_.7</span>
+            <button class="btn-hide" onclick="toggleVisibility()">Esconder</button>
+        </div>
+
+        <div class="tab-bar">
+            <div class="tab active" onclick="openTab('aimbot')"><i class="fas fa-crosshairs"></i> Aimbot</div>
+            <div class="tab" onclick="openTab('settings')"><i class="fas fa-cog"></i> Settings</div>
+            <div class="tab" onclick="openTab('info')"><i class="fas fa-info-circle"></i> Info</div>
+        </div>
+
+        <div id="aimbot" class="content-section active">
+            <div class="option-row"><input type="checkbox"> Aimbot Head</div>
+            <div class="option-row"><input type="checkbox"> Aim Lock (Grudar)</div>
+            <div class="option-row"><input type="checkbox"> Magic Bullet</div>
+            <div class="option-row"><input type="checkbox"> No Recoil</div>
+            <div class="divider"></div>
+            <button class="btn-action" id="injectBtn" onclick="inject()">Injetar Funções</button>
+        </div>
+
+        <div id="settings" class="content-section">
+            <div class="option-row"><input type="checkbox"> Ativar Opções Gerais</div>
+            <div class="divider"></div>
+            <div class="option-row"><input type="checkbox"> Calibrate Sight</div>
+            <div class="grid-2">
+                <div class="option-row"><input type="checkbox"> Optimize RAM</div>
+                <div class="option-row"><input type="checkbox"> Virtual Sens</div>
+                <div class="option-row"><input type="checkbox"> Remove Lags</div>
+                <div class="option-row"><input type="checkbox"> Reduce Crash</div>
+            </div>
+            <div class="divider"></div>
+            <div class="option-row"><input type="checkbox"> Anti-Ban System</div>
+        </div>
+
+        <div id="info" class="content-section">
+            <div class="info-container">
+                <div class="info-item">
+                    <span class="info-label">Owner / DEV</span>
+                    <span class="info-value">@miguel_v_.7</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Data da Build</span>
+                    <span class="info-value">20/02/2026</span>
+                </div>
+                <div class="info-item" style="border-color: #00ff88;">
+                    <span class="info-label" style="color: #00ff88;">Status da Licença</span>
+                    <span class="info-value">Key: FFH4X (Ativa)</span>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div style="background: #111; padding: 10px; border-radius: 8px;">
+                <span style="font-size: 11px; color: #888;">COR DO TEMA</span>
+                <input type="color" id="themeColor" value="#9d4edd" oninput="changeTheme(this.value)" style="width: 100%; margin-top: 5px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkLogin() {
+        if(document.getElementById('keyInput').value === "FFH4X") {
+            document.getElementById('loginScreen').style.display = "none";
+            document.getElementById('mainContent').classList.remove('hidden');
+        } else { alert("Key Inválida!"); }
+    }
+
+    function toggleVisibility() {
+        const panel = document.getElementById('mainPanel');
+        const reopen = document.getElementById('reopenBtn');
+        if(panel.style.display === "none") {
+            panel.style.display = "block";
+            reopen.style.display = "none";
+        } else {
+            panel.style.display = "none";
+            reopen.style.display = "flex";
+        }
+    }
+
+    function openTab(tabId) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function inject() {
+        const btn = document.getElementById('injectBtn');
+        btn.innerHTML = "INJETANDO...";
+        setTimeout(() => { 
+            btn.innerHTML = "INJETADO COM SUCESSO!"; 
+            btn.style.backgroundColor = "#00ff88"; 
+            btn.style.color = "#000";
+        }, 2000);
+    }
+
+    function changeTheme(color) {
+        document.documentElement.style.setProperty('--primary-color', color);
+        document.getElementById('reopenBtn').style.borderColor = color;
+        document.getElementById('reopenBtn').style.boxShadow = `0 0 15px ${color}`;
+    }
+</script>
+</body>
+</html>
+
+Faça o codigo manifest.json e sw.js
